@@ -1,0 +1,33 @@
+#    Name:  pareto123abc.MAC
+#  Author: Omar Mora,  July 2016 (first draft as Minitab .MPJ, Worksheet/Project)
+#
+#  This project (lines of Minitab Statistical Software code) creates a mechanism to
+#  arrange items in a Pareto analysis, following the ABC-123-Alpha-Beta-Gamma format-
+#
+# Considering the Y variable is a series of observartion from different items, every row of Y is an independent item (such as a SKU) 
+#  Suppose your response, Y, is in C2 (column 2 in Minitab Statistical Software), in order to perform the Pareto analysis 
+#  the steps are:
+#  Sort C2 (descendent): Store in C2
+#  Calculate commulative percentage for C2: store result in C3 (sorted cummulative percentage)
+#  Add 1-2-3 criteria (1-2-3 Criteria is based on specific criteria defined by specialized "judges" (experts), using elements 
+#  such as severity, frequency, cost, safety, lead time, among others). 1-2-3 Criteria is a manual-entry on a Minitab Statistical Software spreadsheet
+#  Calculate ABC categories: this algorithm uses A: the sum of the cummulative percentage is equal or less than 80%; 
+#  B: the sum of the cummulative percentage is more than 80% and less than 90%;
+#  C: the sum of the cummulative percentage is more than 90% and less or equal to 100%;  
+#  Alpha-Beta-Gamma criteria is a matriz array where ABC categories are colums and 1-2-3 criteria are rows.
+#  An observation of Y is Alpha when it has been categorized as A from ABC or 1 from 1-2-3
+#  An observation of Y is Beta when it has been categorized as B or C from ABC AND 2 or 3 from 1-2-3
+#  An observation of Y is Gamma when it has been categorized as C from ABC AND 3 from 1-2-3
+
+#  The user can copy the code, open Minitab 17 or newer. Open the Command line Editor (Ctrl + L). Paste the code and submitt the commands.
+#  Note: C2 has to have 15 observations.
+
+###########################################################################
+#
+#  Neither  BBCross-Blackberry&Cross S.A. nor the author(s) sof this MACRO makes any claim 
+#  of or offers any Warranty whatsoever with regard to the accuracy of 
+#  this MACRO or its suitability for use.  BBCross-Blackberry&Cross S.A. and the author(s)
+#  of this MACRO each hereby disclaims any Warranty and/or liability with 
+#  respect thereto. 
+#
+###########################################################################
