@@ -1,16 +1,19 @@
-#    Name:  pareto123abc.MAC
+#  Name:  pareto123abc.MAC
 #  Author: Omar Mora,  July 2016 (first draft as Minitab .MPJ, Worksheet/Project)
-#
+#  This file uses the "#" at the begging of every line of comments, as a standard format of comments 
+#  in Minitab Statistical Software Macros.
+#  
 #  This project (lines of Minitab Statistical Software code) creates a mechanism to
 #  arrange items in a Pareto analysis, following the ABC-123-Alpha-Beta-Gamma format-
-#
-# Considering the Y variable is a series of observartion from different items, every row of Y is an independent item (such as a SKU) 
+#  Inputs
+#  Considering the Y variable is a series of observartion from different items, every row of Y is an independent item (such as a SKU) 
 #  Suppose your response, Y, is in C2 (column 2 in Minitab Statistical Software), in order to perform the Pareto analysis 
 #  the steps are:
 #  Sort C2 (descendent): Store in C2
 #  Calculate commulative percentage for C2: store result in C3 (sorted cummulative percentage)
 #  Add 1-2-3 criteria (1-2-3 Criteria is based on specific criteria defined by specialized "judges" (experts), using elements 
 #  such as severity, frequency, cost, safety, lead time, among others). 1-2-3 Criteria is a manual-entry on a Minitab Statistical Software spreadsheet
+#  For this specific project a initial category as 1, 2 or 3 was pre-defined for every observation of Y. 
 #  Calculate ABC categories: this algorithm uses A: the sum of the cummulative percentage is equal or less than 80%; 
 #  B: the sum of the cummulative percentage is more than 80% and less than 90%;
 #  C: the sum of the cummulative percentage is more than 90% and less or equal to 100%;  
@@ -18,16 +21,61 @@
 #  An observation of Y is Alpha when it has been categorized as A from ABC or 1 from 1-2-3
 #  An observation of Y is Beta when it has been categorized as B or C from ABC AND 2 or 3 from 1-2-3
 #  An observation of Y is Gamma when it has been categorized as C from ABC AND 3 from 1-2-3
-
+#  Outputs
+#  The intented final version will delivered:
+#  alpha-beta-gamma category for every observation of Y
+#  Pareto diagram for the original Y variable
+#  Bar Chart for ABC, 1-2-3 items
+#  A table in order to count how many items were categorized as ABC, 1-2-3
 #  The user can copy the code, open Minitab 17 or newer. Open the Command line Editor (Ctrl + L). Paste the code and submitt the commands.
-#  Note: C2 has to have 15 observations.
+#  Note: C2 has to have 15 observations. Then this number can be modified; however, this project has pre-loaded a fixed number 
+#  of 15 observations.
+
 
 ###########################################################################
 #
-#  Neither  BBCross-Blackberry&Cross S.A. nor the author(s) sof this MACRO makes any claim 
+#  Neither  BBCross-Blackberry&Cross S.A. nor the author(s) sof this project (code) makes any claim 
 #  of or offers any Warranty whatsoever with regard to the accuracy of 
 #  this MACRO or its suitability for use.  BBCross-Blackberry&Cross S.A. and the author(s)
 #  of this MACRO each hereby disclaims any Warranty and/or liability with 
 #  respect thereto. 
 #
 ###########################################################################
+#
+# The following code was generated from Minitab Statistical Software History Manager
+# This is: the front-end interface of Minitab Statistical Software (Version 17) was used to create the Pareto ABC-123-Alpha-Beta-Gamma.
+# Then, the code was extracted from the Project Manager (History)
+# Manual code typing is also possible.
+############################################################################
+# Spanish
+# Minitab 17 in Spanish was used to generate the code
+# The code below will be shown in Spanish. Minitab command are always in English
+
+############################################################################
+
+Formula C3 = 'Consumo*Precio ordenado' / SUM('Consumo*Precio ordenado')*100
+NOTA *** La ventana de datos se utilizó para modificar la hoja de trabajo
+Formula c4 = PARS('Porcentaje ordenado')
+Formula c5 = IF('% acum'  >= 90;"C";IF('% acum' >= 81 And '% acum' <= 90;"B";"A"))
+Worksheet "abc_123_alpha_beta"
+Formula c15 = IF(ABC = "B" And '123' = 2;"beta"; IF('123' = 1;"alpha";IF(ABC = "A" ;"alpha";IF(ABC = "B" And '123' = 3;"beta";ABC = "C" And '123' = 2;"beta"; IF('123' > 3;"error";"gamma")))))
+Formula C3 = 'Consumo*Precio ordenado' / SUM('Consumo*Precio ordenado')*100
+Formula c4 = PARS('Porcentaje ordenado')
+Formula c5 = IF('% acum'  >= 90;"C";IF('% acum' >= 81 And '% acum' <= 90;"B";"A"))
+Worksheet "abc_123_alpha_beta"
+Formula c15 = IF(ABC = "B" And '123' = 2;"beta"; IF('123' = 1;"alpha";IF(ABC = "A" ;"alpha";IF(ABC = "B" And '123' = 3;"beta";ABC = "C" And '123' = 2;"beta"; IF('123' > 3;"error";"gamma")))))
+Pareto 'ABC';
+  Counts 'Porcentaje ordenado';
+  By 'alpha-beta-gama'; 
+  Others 95.
+Pareto 'SKU';
+  Counts 'Consumo*Precio'; 
+  Others 95.
+Table 'ABC' '123'; 
+  Layout 1 1; 
+  DMissing 'ABC' '123';
+  Counts.
+
+
+############################################################################
+
